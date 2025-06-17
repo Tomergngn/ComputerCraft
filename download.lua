@@ -1,4 +1,5 @@
-local filename = "chop.lua"
+local args = {...}
+local filename = args[1]
 
 shell.run("delete " .. filename)
 shell.run("wget https://github.com/Tomergngn/ComputerCraft/blob/main/" .. filename)
