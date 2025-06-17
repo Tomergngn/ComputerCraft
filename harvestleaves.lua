@@ -44,7 +44,7 @@ while true do
     local event, side, channel, replyChannel, message, distance
     repeat
     event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
-    until channel == 1 and message == "Chopping Logs"
+    until channel == 1
     Modem.transmit(replyChannel, 1, true)
     BreakLeaves()
     Modem.transmit(replyChannel, 1, false)
