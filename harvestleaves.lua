@@ -14,29 +14,19 @@ function BreakLeaves()
     turtle.down()
     turtle.down()
     turtle.down()
-    turtle.down()
-    for _=1, 4 do
-        BreakTriplet()
-        turtle.turnRight()
-    end
-    for i=1, 3 do
-        for j=1, 4 do BreakTriplet() end
-        turtle.turnRight()
-    end
+    
     BreakTriplet()
-    turtle.turnRight()
-    for _=1, 3 do BreakTriplet() end
-    for i=1, 2 do
-        turtle.turnLeft()
-        for j=1, 2 do BreakTriplet() end
-    end
-    turtle.up()
-    turtle.digUp()
-    for _=1, (4+shortTree) do turtle.up() end
-    turtle.turnLeft()
-    turtle.forward()
-    turtle.turnRight()
-    turtle.back()
+    turtle.left()
+    BreakTriplet()
+    turtle.left()
+    BreakTriplet()
+    BreakTriplet()
+    turtle.left()
+    BreakTriplet()
+    BreakTriplet()
+    turtle.left()
+    BreakTriplet()
+    BreakTriplet()
 end
 
 Modem = peripheral.find("modem") or error("No modem attached", 0)
