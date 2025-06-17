@@ -71,25 +71,13 @@ while true do
         turtle.up()
         turtle.digUp()
         turtle.up()
-        while not IsBlockUp("minecraft:air") do
+        while not IsBlockUp("minecraft:birch_leaves") do
             turtle.digUp()
             turtle.up()
-            for i = 1, 3 do
-                if IsBlock("minecraft:birch_log") then
-                    turtle.dig()
-                end
-                turtle.turnLeft()
-            end
-            if IsBlock("minecraft:birch_log") then
-                turtle.dig()
-            end
             height = height + 1
         end
         for _ = 1, height do
             turtle.down()
-        end
-        for _ = 1, ((height - 2) % 4) do
-            turtle.turnLeft()
         end
         turtle.back()
     elseif Select("minecraft:birch_sapling") then
