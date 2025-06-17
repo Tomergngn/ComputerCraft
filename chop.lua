@@ -143,5 +143,5 @@ while true do
             if IsBlock("minecraft:birch_log") then break end
         end
     else GetBoneMeal()end
-    sleep(1)
+    sleep(0.2)
 end
