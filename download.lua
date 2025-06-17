@@ -29,7 +29,7 @@ end
 if finish == start then
     error("No rawLines found in the file.")
 end
-filestr = string.sub(filestr, start, finish)
+filestr = string.sub(filestr, start, finish - 2)
 filestr = string.gsub(filestr, "\",\"", "\n")
 
 local fileWrite = io.open(filename, "w")
