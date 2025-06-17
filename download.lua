@@ -10,13 +10,28 @@ if fileRead then
 else
 	error("Failed to open file: " .. filename)
 end
+local start, _ = string.find(filestr, "rawLines", 1)
+start = start + 12
+local bracketCount = 1
+local finish = start
+while true do
+    local char = string.sub(filestr,finish, finish)
+    if char == "[" then
+        bracketCount = bracketCount + 1
+    elseif char == "]" then
+        bracketCount = bracketCount - 1
+        if bracketCount == 0 then
+            break
+        end
+    end
+    finish = finish + 1
+end
+if finish == start then
+    error("No rawLines found in the file.")
+end
+filestr = string.sub(filestr, start, finish)
+filestr = string.gsub(filestr, "\",\"", "\n")
 
-local start = filestr:find("z-index: 1;\">", 1, true)
-start = start + #("z-index: 1;\">")
-
-local finish = filestr:find("</textarea>", start, true)
-
-filestr = filestr:sub(start, finish - 1)
 local fileWrite = io.open(filename, "w")
 if fileWrite then
     fileWrite:write(filestr)
