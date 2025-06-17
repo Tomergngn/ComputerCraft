@@ -5,28 +5,51 @@ function BreakLeaves()
         turtle.digUp()
         turtle.digDown()
     end
+    function BreakDouble()
+        turtle.dig()
+        turtle.forward()
+        turtle.digDown()
+    end
     local shortTree = 0
     if not turtle.detectDown() then
         shortTree = 1
         turtle.down()
     end
     turtle.digDown()
-    turtle.down()
-    turtle.down()
-    turtle.down()
+    for _=1, 3 do turtle.down() end
     
     BreakTriplet()
     turtle.turnLeft()
     BreakTriplet()
+
+    for _=1, 3 do
+        turtle.turnLeft()
+        BreakTriplet()
+        BreakTriplet()
+    end
+
+    BreakDouble()
+
     turtle.turnLeft()
-    BreakTriplet()
-    BreakTriplet()
+    BreakDouble()
+    BreakDouble()
+    BreakDouble()
+
+    for _=1, 3 do
+        turtle.turnLeft()
+        BreakDouble()
+        BreakDouble()
+        BreakDouble()
+        BreakDouble()
+    end
+
     turtle.turnLeft()
-    BreakTriplet()
-    BreakTriplet()
-    turtle.turnLeft()
-    BreakTriplet()
-    BreakTriplet()
+    turtle.forward()
+    turtle.forward()
+    turtle.right()
+    for _=1, 3 do turtle.up() end
+    turtle.back()
+    turtle.back()
 end
 
 Modem = peripheral.find("modem") or error("No modem attached", 0)
