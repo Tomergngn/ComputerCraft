@@ -39,7 +39,7 @@ end
 function IsBlockUp(blockName)
     local success, data = turtle.inspectUp()
     if not success then
-        return blockName == "air"
+        return blockName == "minecraft:air"
     end
     return data.name == blockName
 end
