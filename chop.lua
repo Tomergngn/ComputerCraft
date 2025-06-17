@@ -81,7 +81,7 @@ while true do
         end
         turtle.back()
     elseif Select("minecraft:birch_sapling") then
-        turtle.placeDown()
+        turtle.place()
     end
     sleep(1)
 end
