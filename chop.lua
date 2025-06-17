@@ -21,7 +21,7 @@ if turtle.compare() then
     turtle.forward()
     turtle.select(15)
     local height = 0
-    while not turtle.compare() do
+    while not turtle.compareUp() do
         turtle.digUp()
         turtle.up()
         height = height + 1
