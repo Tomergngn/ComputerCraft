@@ -85,6 +85,16 @@ function Find(name)
     return 0
 end
 
+function Count(name)
+    local cnt = 0
+    for i = 1, 16 do
+        if turtle.getItemDetail(i) and turtle.getItemDetail(i).name == name then
+            cnt = cnt + turtle.getItemCount(i)
+        end
+    end
+    return cnt
+end
+
 function Select(name)
     local tmp = Find(name)
     if tmp == 0 then return false end
@@ -124,6 +134,36 @@ while true do
         end
     elseif Select("minecraft:birch_sapling") then -- Placing a sapling if there is no tree
         turtle.place()
+    end
+    for i = 1, 16 do
+        turtle.select(i)
+        turtle.dropDown(64) -- Dropping all items in the inventory to the chest below
+    end
+
+    turtle.suckUp() -- Act as another hopper
+    turtle.suck()
+
+    -- If the turtle filled up, it will drop items to the chests
+    local cnt = Count("minecraft:birch_sapling")
+    if cnt == 0 or FreeSlots() == 0 then
+        turtle.down()
+        turtle.turnRight()
+        for i = 1, 16 do
+            if turtle.getItemCount(i) > 0 then
+                local itemDetail = turtle.getItemDetail(i)
+                if itemDetail then
+                    if itemDetail.name == "minecraft:birch_log" then
+                        turtle.drop(64) -- Dropping birch logs to the chest on the right
+                    elseif itemDetail.name == "minecraft:stick" then
+                        turtle.dropDown(64) -- Dropping sticks to the chest below
+                    elseif itemDetail.name == "minecraft:birch_sapling" and cnt > 64 then
+                        cnt = cnt - turtle.getItemCount(i)
+                        turtle.dropDown(64) -- Dropping other items to the chest in front of the turtle
+                    end
+                end
+            end
+        end
+        turtle.select(1)
     end
     sleep(0.2)
 end
