@@ -29,7 +29,6 @@ function Refuel()
             turtle.back()
             turtle.suckDown(64) -- Getting fuel from the chest
             local dlyr = not BruteRefuel()
-            while turtle.suckDown(64) and BruteRefuel() do end
             turtle.select(slct)
             turtle.forward()
             turtle.forward()
