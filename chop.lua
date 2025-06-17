@@ -129,7 +129,7 @@ local function Listen()
     while true do
         repeat
             event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
-        until channel == 43
+        until channel == 2
         harvestingLeaves = message
         sleep(1)
     end
@@ -162,7 +162,8 @@ while true do
                 if not Select("minecraft:bone_meal") then break end
                 turtle.place()
                 if IsBlock("minecraft:birch_log") then
-                    modem.transmit(1, 2, "Hello, world!")
+                    Modem.transmit(1, 2, "Chopping Logs")
+                    sleep(0.2)
                     break
                 end
             end
@@ -206,6 +207,6 @@ while true do
 end
 end
 
-local modem = peripheral.find("modem") or error("No modem attached", 0)
+Modem = peripheral.find("modem") or error("No modem attached", 0)
 harvestingLeaves = false
 parallel.waitForAny(Listen, MainLoop)
