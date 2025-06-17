@@ -1,7 +1,7 @@
 local filename = "chop.lua"
 
 shell.run("delete " .. filename)
-shell.run("wget https://github.com/Tomergngn/ComputerCraft/blob/main/" .. filename .. " " .. filename)
+shell.run("wget https://github.com/Tomergngn/ComputerCraft/blob/main/" .. filename)
 local fileRead = io.open(filename, "r")
 local filestr = nil
 if fileRead then
