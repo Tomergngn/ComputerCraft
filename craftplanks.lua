@@ -40,7 +40,9 @@ while true do
     if not furDtls.state.lit then
         turtle.up()
         turtle.suck(64)
-        turtle.drop(math.min(49, turtle.getItemCount()))
+        if turtle.getItemCount() > 15 then
+            turtle.drop(turtle.getItemCount() - 15)
+        end
         turtle.down()
         turtle.craft()
         turtle.drop()
