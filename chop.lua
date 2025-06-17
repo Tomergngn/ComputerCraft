@@ -1,27 +1,73 @@
-function FuelUp()
-    -- Check if the turtle has enough fuel
-    if turtle.getFuelLevel() < 10 then
-        local slct = turtle.getSelectedSlot()
-        turtle.select(14)
-        if not turtle.refuel() then
-            debug_print("Not enough fuel! Please refuel the turtle.")
-            turtle.select(slct)
-            return false
+function Refuel()
+    function BruteRefuel()
+        for i=1, 16 do
+            if turtle.getItemCount(i) > 0 then
+                local itemDetail = turtle.getItemDetail(i)
+                if itemDetail and itemDetail.name == "minecraft:charcoal" then
+                    turtle.select(i)
+                    turtle.refuel(1) -- Refuel with coal
+                    return true
+                end
+            end
         end
-        turtle.select(slct)
-        return true
+        return false
+    end
+    if turtle.getFuelLevel() < 100 then
+        if not BruteRefuel() then
+            local slct = turtle.getSelectedSlot()
+            turtle.select(13)
+            turtle.turnLeft()
+            turtle.turnLeft()
+            turtle.suck(64) -- Getting fuel from the chest
+            if not BruteRefuel() then
+                error("No fuel found in the chest or inventory!")
+            end
+            turtle.turnLeft()
+            turtle.turnLeft()
+        end        
     end
 end
 
--- Checking if the tree grew:
-turtle.select(16)
-if turtle.compare() then
+function IsBlock(blockName)
+    local success, data = turtle.inspect()
+    if not success then
+        return blockName == "air"
+    end
+    return data.name == blockName
+end
+
+function IsBlockUp(blockName)
+    local success, data = turtle.inspectUp()
+    if not success then
+        return blockName == "air"
+    end
+    return data.name == blockName
+end
+
+function CheckNotEmpty()
+    if turtle.getItemCount() == 0 then
+        local slct = turtle.getSelectedSlot()
+        error("Slot " .. slct .. " is empty!")
+    end
+end
+
+function Select(name)
+    for i = 1, 16 do
+        if turtle.getItemDetail(i) and turtle.getItemDetail(i).name == name then
+            turtle.select(i)
+            return true
+        end
+    end
+    return false
+end
+
+Refuel()
+while true do
+    if IsBlock("minecraft:oak_log") then -- Checking if the tree grew:
     turtle.dig()
-    FuelUp()
     turtle.forward()
-    turtle.select(15)
     local height = 0
-    while not turtle.compareUp() do
+    while not IsBlockUp("minecraft:oak_leaves") do
         turtle.digUp()
         turtle.up()
         height = height + 1
@@ -30,4 +76,9 @@ if turtle.compare() then
         turtle.down()
     end
     turtle.back()
+
+    if Select("minecraft:oak_sapling") then -- Selecting sapling
+        turtle.placeDown()
+    end
+end
 end
