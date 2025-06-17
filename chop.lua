@@ -158,10 +158,6 @@ while true do
     elseif Select("minecraft:birch_sapling") then -- Placing a sapling if there is no tree
         turtle.place()
     end
-    for i = 1, 16 do
-        turtle.select(i)
-        turtle.dropDown(64) -- Dropping all items in the inventory to the chest below
-    end
 
     turtle.suckUp() -- Act as another hopper
     turtle.suck()
