@@ -92,10 +92,8 @@ while true do
             turtle.turnLeft()
         end
         turtle.back()
-
-        if Select("minecraft:oak_sapling") then -- Selecting sapling
-            turtle.placeDown()
-        end
+    elseif Select("minecraft:oak_sapling") then
+        turtle.placeDown()
     end
     sleep(1)
 end
