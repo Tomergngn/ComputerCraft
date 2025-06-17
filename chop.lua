@@ -105,6 +105,19 @@ function FreeSlots()
     return cnt
 end
 
+function WoodSlots()
+    local cnt = 0
+    for i = 1, 16 do
+        if turtle.getItemDetail(i) then
+            local itemName = turtle.getItemDetail(i).name
+            if itemName == "minecraft:birch_log" or itemName == "minecraft:stick" then
+                cnt = cnt + 1
+            end
+        end
+    end
+    return cnt
+end
+
 function Select(name)
     local tmp = Find(name)
     if tmp == 0 then return false end
@@ -155,7 +168,7 @@ while true do
 
     -- If the turtle filled up, it will drop items to the chests
     local cnt = Count("minecraft:birch_sapling")
-    if cnt == 0 or FreeSlots() == 0 then
+    if (cnt == 0 and WoodSlots() > 0) or FreeSlots() == 0 then
         turtle.down()
         turtle.turnRight()
         for i = 1, 16 do
@@ -173,6 +186,8 @@ while true do
                 end
             end
         end
+        turtle.turnRight()
+        turtle.down()
         turtle.select(1)
     end
     sleep(0.2)
