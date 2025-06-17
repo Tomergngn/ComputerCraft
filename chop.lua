@@ -88,7 +88,7 @@ while true do
         for _ = 1, height do
             turtle.down()
         end
-        for _ = 1, (height % 4) do
+        for _ = 1, ((height - 2) % 4) do
             turtle.turnLeft()
         end
         turtle.back()
