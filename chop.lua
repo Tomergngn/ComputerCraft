@@ -134,8 +134,13 @@ while true do
             turtle.place()
         end
     end
-    if Find("minecraft:bone_meal") == 0 or Count("minecraft:bone_meal") < 16 then
-        GetBoneMeal()
-    end
+    local cnt = Count("minecraft:bone_meal")
+    if cnt > 0 then
+        for _=1, cnt do
+            if not Select("minecraft:bone_meal") then break end
+            turtle.place()
+            if IsBlock("minecraft:birch_log") then break end
+        end
+    else GetBoneMeal()end
     sleep(1)
 end
