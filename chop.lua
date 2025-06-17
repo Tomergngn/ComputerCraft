@@ -25,7 +25,7 @@ function Refuel()
             end
             turtle.back()
             turtle.back()
-            turtle.suckDown(128 - Count("minecraft:bone_meal"))
+            turtle.suckDown(64 - Count("minecraft:bone_meal"))
             turtle.back()
             turtle.suckDown(64) -- Getting fuel from the chest
             if not BruteRefuel() then
@@ -54,7 +54,7 @@ function GetBoneMeal()
     end
     turtle.back()
     turtle.back()
-    turtle.suckDown(128 - Count("minecraft:bone_meal"))
+    turtle.suckDown(64 - Count("minecraft:bone_meal"))
     turtle.back()
     turtle.suckDown(64) -- Getting fuel from the chest
     if not BruteRefuel() then
@@ -134,7 +134,7 @@ while true do
             turtle.place()
         end
     end
-    if Find("minecraft:bone_meal") == 0 or Count("minecraft:bone_meal") < 20 then
+    if Find("minecraft:bone_meal") == 0 or Count("minecraft:bone_meal") < 16 then
         GetBoneMeal()
     end
     sleep(1)
