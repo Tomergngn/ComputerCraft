@@ -28,15 +28,16 @@ function Refuel()
             turtle.suckDown(64 - Count("minecraft:bone_meal"))
             turtle.back()
             turtle.suckDown(64) -- Getting fuel from the chest
-            if not BruteRefuel() then
-                error("No fuel found in the chest or inventory!")
-            end
+            local dlyr = not BruteRefuel()
             while turtle.suckDown(64) and BruteRefuel() do end
             turtle.select(slct)
             turtle.forward()
             turtle.forward()
             turtle.forward()
             turtle.down()
+            if dlyr then
+                error("No fuel found in the chest or inventory!")
+            end
         end
     end
 end
