@@ -25,7 +25,7 @@ function Refuel()
             end
             turtle.back()
             turtle.back()
-            turtle.suckDown(64 - Count("minecraft:bone_meal"))
+            turtle.suckDown(63)
             turtle.back()
             turtle.suckDown(64) -- Getting fuel from the chest
             local dlyr = not BruteRefuel()
@@ -54,7 +54,7 @@ function GetBoneMeal()
     end
     turtle.back()
     turtle.back()
-    turtle.suckDown(64 - Count("minecraft:bone_meal"))
+    turtle.suckDown(63)
     turtle.forward()
     turtle.forward()
     turtle.down()
@@ -85,16 +85,6 @@ function Find(name)
     return 0
 end
 
-function Count(name)
-    local count = 0
-    for i = 1, 16 do
-        if turtle.getItemDetail(i) and turtle.getItemDetail(i).name == name then
-            count = count + turtle.getItemCount(i)
-        end
-    end
-    return count
-end
-
 function Select(name)
     local tmp = Find(name)
     if tmp == 0 then return false end
@@ -122,7 +112,7 @@ while true do
         end
         turtle.back()
     elseif IsBlock("minecraft:birch_sapling") then
-        local cnt = Count("minecraft:bone_meal")
+        local cnt = turtle.getItemCount(1)
         if cnt > 1 then
             for _=2, cnt do
                 if not Select("minecraft:bone_meal") then break end
