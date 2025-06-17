@@ -71,7 +71,7 @@ end
 function IsBlock(blockName)
     local success, data = turtle.inspect()
     if not success then
-        return blockName == "air"
+        return blockName == "minecraft:air"
     end
     return data.name == blockName
 end
