@@ -62,23 +62,23 @@ function Select(name)
 end
 
 Refuel()
-while sleep(1) do
+while true do
     if IsBlock("minecraft:oak_log") then -- Checking if the tree grew:
-    turtle.dig()
-    turtle.forward()
-    local height = 0
-    while not IsBlockUp("minecraft:oak_leaves") do
-        turtle.digUp()
-        turtle.up()
-        height = height + 1
-    end
-    for i = 1, height do
-        turtle.down()
-    end
-    turtle.back()
+        turtle.dig()
+        turtle.forward()
+        local height = 0
+        while not IsBlockUp("minecraft:oak_leaves") do
+            turtle.digUp()
+            turtle.up()
+            height = height + 1
+        end
+        for i = 1, height do
+            turtle.down()
+        end
+        turtle.back()
 
-    if Select("minecraft:oak_sapling") then -- Selecting sapling
-        turtle.placeDown()
+        if Select("minecraft:oak_sapling") then -- Selecting sapling
+            turtle.placeDown()
+        end
     end
-end
 end
