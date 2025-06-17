@@ -134,14 +134,15 @@ while true do
         if Select("minecraft:birch_sapling") then
             turtle.place()
         end
-    end
-    local cnt = Count("minecraft:bone_meal")
-    if cnt > 0 then
-        for _=1, cnt do
-            if not Select("minecraft:bone_meal") then break end
-            turtle.place()
-            if IsBlock("minecraft:birch_log") then break end
+    elseif IsBlock("minecraft:birch_sapling") then
+        local cnt = Count("minecraft:bone_meal")
+        if cnt > 1 then
+            for _=2, cnt do
+                if not Select("minecraft:bone_meal") then break end
+                turtle.place()
+                if IsBlock("minecraft:birch_log") then break end
+            end
         end
-    else GetBoneMeal()end
+    else GetBoneMeal() end
     sleep(0.2)
 end
