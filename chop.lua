@@ -81,5 +81,5 @@ while true do
             turtle.placeDown()
         end
     end
-    sleep(1)
+    sleep(1) -- Wait for a second before checking again
 end
