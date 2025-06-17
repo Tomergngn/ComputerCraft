@@ -109,8 +109,8 @@ function WoodSlots()
     local cnt = 0
     for i = 1, 16 do
         if turtle.getItemDetail(i) then
-            local itemName = turtle.getItemDetail(i).name
-            if itemName == "minecraft:birch_log" or itemName == "minecraft:stick" then
+            local itemDetail = turtle.getItemDetail(i)
+            if itemDetail.name == "minecraft:birch_log" or (itemDetail.name == "minecraft:stick" and itemDetail.count >= 2) then
                 cnt = cnt + 1
             end
         end
