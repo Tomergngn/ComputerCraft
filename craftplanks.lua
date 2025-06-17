@@ -14,18 +14,18 @@ function Refuel()
     if turtle.getFuelLevel() < 25 then
         if not BruteRefuel() then
             turtle.down()
-            turtle.right()
+            turtle.turnRight()
             turtle.forward()
-            turtle.left()
+            turtle.turnLeft()
             for _=1, 4 do turtle.forward() end
             for _=1, 3 do turtle.up() end
             turtle.suckUp(64) -- Getting fuel from the chest
             local dlyr = not BruteRefuel()
             for _=1, 3 do turtle.down() end
             for _=1, 4 do turtle.back() end
-            turtle.right()
+            turtle.turnRight()
             turtle.back()
-            turtle.left()
+            turtle.turnLeft()
             turtle.up()
             if dlyr then
                 error("No fuel found in the chest or inventory!")
