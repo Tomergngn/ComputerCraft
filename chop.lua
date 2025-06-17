@@ -11,7 +11,7 @@ function Refuel()
         end
         return false
     end
-    if turtle.getFuelLevel() < 100 then
+    if turtle.getFuelLevel() < 20 then
         if not BruteRefuel() then
             local slct = turtle.getSelectedSlot()
             if not turtle.up() then
