@@ -3,6 +3,13 @@
         "turtle",
         "debug_print",
         "sleep",
-        "shell"
+        "shell",
+        "parallel",
+        "rednet",
+        "harvestingLeaves",
+        "peripheral"
+    ],
+    "Lua.diagnostics.disable": [
+        "undefined-field"
     ]
 }

@@ -34,23 +34,41 @@ function Refuel()
     end
 end
 
-while true do
-    Refuel()
-    local _, furDtls = turtle.inspect()
-    if not furDtls.state.lit then
-        turtle.up()
-        turtle.suck(64)
-        if turtle.getItemCount() > 15 then
-            turtle.drop(turtle.getItemCount() - 15)
-        end
-        turtle.down()
-        turtle.craft()
-        turtle.drop()
-        local cnt = turtle.getItemCount()
-        if cnt > 0 then
-            sleep(1.5*cnt)
-            turtle.drop()
-        end
+local function Listen()
+    local event, side, channel, replyChannel, message, distance
+    while true do
+        repeat
+            event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
+        until channel == 43
+        harvestingLeaves = message
+        sleep(1)
     end
-    sleep(0.2)
 end
+
+function MainLoop()
+    while true do
+        if not harvestingLeaves then
+            Refuel()
+            local _, furDtls = turtle.inspect()
+            if not furDtls.state.lit then
+                turtle.up()
+                turtle.suck(64)
+                if turtle.getItemCount() > 15 then
+                    turtle.drop(turtle.getItemCount() - 15)
+                end
+                turtle.down()
+                turtle.craft()
+                turtle.drop()
+                local cnt = turtle.getItemCount()
+                if cnt > 0 then
+                    sleep(1.5*cnt)
+                    turtle.drop()
+                end
+            end
+        end
+        sleep(0.2)
+    end
+end
+
+harvestingLeaves = false
+parallel.waitForAny(Listen, MainLoop)

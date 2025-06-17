@@ -124,6 +124,18 @@ function Select(name)
     return true
 end
 
+local function Listen()
+    local event, side, channel, replyChannel, message, distance
+    while true do
+        repeat
+            event, side, channel, replyChannel, message, distance = os.pullEvent("modem_message")
+        until channel == 43
+        harvestingLeaves = message
+        sleep(1)
+    end
+end
+
+function MainLoop()
 while true do
     Refuel()
     if IsBlock("minecraft:birch_log") then -- Checking if the tree grew:
@@ -149,7 +161,10 @@ while true do
             for _=2, cnt do
                 if not Select("minecraft:bone_meal") then break end
                 turtle.place()
-                if IsBlock("minecraft:birch_log") then break end
+                if IsBlock("minecraft:birch_log") then
+                    modem.transmit(1, 2, "Hello, world!")
+                    break
+                end
             end
         else 
             GetBoneMeal()
@@ -189,3 +204,8 @@ while true do
     end
     sleep(0.2)
 end
+end
+
+local modem = peripheral.find("modem") or error("No modem attached", 0)
+harvestingLeaves = false
+parallel.waitForAny(Listen, MainLoop)
