@@ -95,6 +95,16 @@ function Count(name)
     return cnt
 end
 
+function FreeSlots()
+    local cnt = 0
+    for i = 1, 16 do
+        if turtle.getItemCount(i) == 0 then
+            cnt = cnt + 1
+        end
+    end
+    return cnt
+end
+
 function Select(name)
     local tmp = Find(name)
     if tmp == 0 then return false end
