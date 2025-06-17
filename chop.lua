@@ -130,10 +130,6 @@ while true do
             turtle.down()
         end
         turtle.back()
-    elseif IsBlock("minecraft:air") then
-        if Select("minecraft:birch_sapling") then
-            turtle.place()
-        end
     elseif IsBlock("minecraft:birch_sapling") then
         local cnt = Count("minecraft:bone_meal")
         if cnt > 1 then
@@ -142,7 +138,11 @@ while true do
                 turtle.place()
                 if IsBlock("minecraft:birch_log") then break end
             end
+        else 
+            GetBoneMeal()
         end
-    else GetBoneMeal() end
+    elseif Select("minecraft:birch_sapling") then -- Placing a sapling if there is no tree
+        turtle.place()
+    end
     sleep(0.2)
 end
