@@ -66,7 +66,11 @@ while true do
     if IsBlock("minecraft:oak_log") then -- Checking if the tree grew:
         turtle.dig()
         turtle.forward()
-        local height = 0
+        local height = 2
+        turtle.digUp()
+        turtle.up()
+        turtle.digUp()
+        turtle.up()
         while not IsBlockUp("minecraft:air") do
             turtle.digUp()
             turtle.up()
