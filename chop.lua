@@ -62,7 +62,7 @@ function Select(name)
 end
 
 Refuel()
-while true do
+while sleep(1) do
     if IsBlock("minecraft:oak_log") then -- Checking if the tree grew:
     turtle.dig()
     turtle.forward()
