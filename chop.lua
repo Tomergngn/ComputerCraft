@@ -81,4 +81,5 @@ while true do
             turtle.placeDown()
         end
     end
+    sleep(1)
 end
