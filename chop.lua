@@ -25,7 +25,7 @@ function Refuel()
             end
             turtle.back()
             turtle.back()
-            turtle.suckDown(63)
+            turtle.suckDown(62)
             turtle.back()
             turtle.suckDown(64) -- Getting fuel from the chest
             local dlyr = not BruteRefuel()
@@ -54,7 +54,7 @@ function GetBoneMeal()
     end
     turtle.back()
     turtle.back()
-    turtle.suckDown(63)
+    turtle.suckDown(62)
     turtle.forward()
     turtle.forward()
     turtle.down()
