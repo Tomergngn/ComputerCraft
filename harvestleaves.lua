@@ -46,7 +46,7 @@ function BreakLeaves()
     turtle.turnLeft()
     turtle.forward()
     turtle.forward()
-    turtle.right()
+    turtle.turnRight()
     for _=1, 3 do turtle.up() end
     turtle.back()
     turtle.back()
