@@ -67,13 +67,25 @@ while true do
         turtle.dig()
         turtle.forward()
         local height = 0
-        while not IsBlockUp("minecraft:oak_leaves") do
+        while not IsBlockUp("minecraft:air") do
             turtle.digUp()
             turtle.up()
+            for i = 1, 3 do
+                if IsBlock("minecraft:oak_log") then
+                    turtle.dig()
+                end
+                turtle.turnLeft()
+            end
+            if IsBlock("minecraft:oak_log") then
+                turtle.dig()
+            end
             height = height + 1
         end
-        for i = 1, height do
+        for _ = 1, height do
             turtle.down()
+        end
+        for _ = 1, (height % 4) do
+            turtle.turnLeft()
         end
         turtle.back()
 
@@ -81,5 +93,5 @@ while true do
             turtle.placeDown()
         end
     end
-    sleep(1) -- Wait for a second before checking again
+    sleep(1)
 end
