@@ -15,15 +15,25 @@ function Refuel()
     if turtle.getFuelLevel() < 100 then
         if not BruteRefuel() then
             local slct = turtle.getSelectedSlot()
-            turtle.select(13)
-            turtle.turnLeft()
-            turtle.turnLeft()
-            turtle.suck(64) -- Getting fuel from the chest
+            if not turtle.up() then
+                turtle.digUp()
+                turtle.up()
+                turtle.turnLeft()
+                turtle.turnLeft()
+                turtle.dig()
+                turtle.turnLeft()
+                turtle.turnLeft()
+            end
+            turtle.back()
+            turtle.back()
+            turtle.suckDown(64) -- Getting fuel from the chest
             if not BruteRefuel() then
                 error("No fuel found in the chest or inventory!")
             end
-            turtle.turnLeft()
-            turtle.turnLeft()
+            turtle.select(slct)
+            turtle.forward()
+            turtle.forward()
+            turtle.down()
         end        
     end
 end
