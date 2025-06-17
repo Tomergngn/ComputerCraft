@@ -209,5 +209,6 @@ end
 end
 
 Modem = peripheral.find("modem") or error("No modem attached", 0)
+Modem.open(2)
 harvestingLeaves = false
 parallel.waitForAny(Listen, MainLoop)

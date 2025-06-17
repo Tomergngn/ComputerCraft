@@ -40,6 +40,8 @@ function BreakLeaves()
 end
 
 Modem = peripheral.find("modem") or error("No modem attached", 0)
+Modem.open(1)
+
 while true do
     local event, side, channel, replyChannel, message, distance
     repeat
