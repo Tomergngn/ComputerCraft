@@ -25,7 +25,7 @@ function Refuel()
             end
             turtle.back()
             turtle.back()
-            turtle.suckDown(128 - turtle.getItemCount(Find("minecraft:bone_meal")))
+            turtle.suckDown(128 - Count("minecraft:bone_meal"))
             turtle.back()
             turtle.suckDown(64) -- Getting fuel from the chest
             if not BruteRefuel() then
@@ -54,7 +54,7 @@ function GetBoneMeal()
     end
     turtle.back()
     turtle.back()
-    turtle.suckDown(128 - turtle.getItemCount(Find("minecraft:bone_meal")))
+    turtle.suckDown(128 - Count("minecraft:bone_meal"))
     turtle.back()
     turtle.suckDown(64) -- Getting fuel from the chest
     if not BruteRefuel() then
@@ -84,13 +84,6 @@ function IsBlockUp(blockName)
     return data.name == blockName
 end
 
-function CheckNotEmpty()
-    if turtle.getItemCount() == 0 then
-        local slct = turtle.getSelectedSlot()
-        error("Slot " .. slct .. " is empty!")
-    end
-end
-
 function Find(name)
     for i = 1, 16 do
         if turtle.getItemDetail(i) and turtle.getItemDetail(i).name == name then
@@ -98,6 +91,16 @@ function Find(name)
         end
     end
     return 0
+end
+
+function Count(name)
+    local count = 0
+    for i = 1, 16 do
+        if turtle.getItemDetail(i) and turtle.getItemDetail(i).name == name then
+            count = count + turtle.getItemCount(i)
+        end
+    end
+    return count
 end
 
 function Select(name)
@@ -131,7 +134,7 @@ while true do
             turtle.place()
         end
     end
-    if Find("minecraft:bone_meal") == 0 or turtle.getItemCount(Find("minecraft:bone_meal")) < 20 then
+    if Find("minecraft:bone_meal") == 0 or Count("minecraft:bone_meal") < 20 then
         GetBoneMeal()
     end
     sleep(1)
