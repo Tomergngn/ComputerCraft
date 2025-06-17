@@ -5,8 +5,7 @@ function Refuel()
                 local itemDetail = turtle.getItemDetail(i)
                 if itemDetail and itemDetail.name == "minecraft:charcoal" then
                     turtle.select(i)
-                    turtle.refuel(1) -- Refuel with coal
-                    return true
+                    return turtle.refuel()
                 end
             end
         end
@@ -26,16 +25,47 @@ function Refuel()
             end
             turtle.back()
             turtle.back()
+            turtle.suckDown(128 - turtle.getItemCount(Find("minecraft:bone_meal")))
+            turtle.back()
             turtle.suckDown(64) -- Getting fuel from the chest
             if not BruteRefuel() then
                 error("No fuel found in the chest or inventory!")
             end
+            while turtle.suckDown(64) and BruteRefuel() do end
             turtle.select(slct)
             turtle.forward()
             turtle.forward()
+            turtle.forward()
             turtle.down()
-        end        
+        end
     end
+end
+
+function GetBoneMeal()
+    local slct = turtle.getSelectedSlot()
+    if not turtle.up() then
+        turtle.digUp()
+        turtle.up()
+        turtle.turnLeft()
+        turtle.turnLeft()
+        turtle.dig()
+        turtle.turnLeft()
+        turtle.turnLeft()
+    end
+    turtle.back()
+    turtle.back()
+    turtle.suckDown(128 - turtle.getItemCount(Find("minecraft:bone_meal")))
+    turtle.back()
+    turtle.suckDown(64) -- Getting fuel from the chest
+    if not BruteRefuel() then
+        error("No fuel found in the chest or inventory!")
+    end
+    while turtle.suckDown(64) and BruteRefuel() do end
+    turtle.select(slct)
+    turtle.forward()
+    turtle.forward()
+    turtle.forward()
+    turtle.down()
 end
 
 function IsBlock(blockName)
@@ -61,14 +91,20 @@ function CheckNotEmpty()
     end
 end
 
-function Select(name)
+function Find(name)
     for i = 1, 16 do
         if turtle.getItemDetail(i) and turtle.getItemDetail(i).name == name then
-            turtle.select(i)
-            return true
+            return i
         end
     end
-    return false
+    return 0
+end
+
+function Select(name)
+    local tmp = Find(name)
+    if tmp == 0 then return false end
+    turtle.select(Find(name))
+    return true
 end
 
 Refuel()
@@ -90,8 +126,13 @@ while true do
             turtle.down()
         end
         turtle.back()
-    elseif Select("minecraft:birch_sapling") then
-        turtle.place()
+    elseif IsBlock("minecraft:air") then
+        if Select("minecraft:birch_sapling") then
+            turtle.place()
+        end
+    end
+    if turtle.getItemCount(Find("minecraft:bone_meal")) < 20 then
+        GetBoneMeal()
     end
     sleep(1)
 end
