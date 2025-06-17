@@ -186,9 +186,8 @@ while true do
                 end
             end
         end
-        turtle.turnRight()
-        turtle.down()
-        turtle.select(1)
+        turtle.turnLeft()
+        turtle.up()
     end
     sleep(0.2)
 end
