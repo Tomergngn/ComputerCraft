@@ -63,7 +63,7 @@ end
 
 Refuel()
 while true do
-    if IsBlock("minecraft:oak_log") then -- Checking if the tree grew:
+    if IsBlock("minecraft:birch_log") then -- Checking if the tree grew:
         turtle.dig()
         turtle.forward()
         local height = 2
@@ -75,12 +75,12 @@ while true do
             turtle.digUp()
             turtle.up()
             for i = 1, 3 do
-                if IsBlock("minecraft:oak_log") then
+                if IsBlock("minecraft:birch_log") then
                     turtle.dig()
                 end
                 turtle.turnLeft()
             end
-            if IsBlock("minecraft:oak_log") then
+            if IsBlock("minecraft:birch_log") then
                 turtle.dig()
             end
             height = height + 1
@@ -92,7 +92,7 @@ while true do
             turtle.turnLeft()
         end
         turtle.back()
-    elseif Select("minecraft:oak_sapling") then
+    elseif Select("minecraft:birch_sapling") then
         turtle.placeDown()
     end
     sleep(1)
