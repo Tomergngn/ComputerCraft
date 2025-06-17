@@ -3,7 +3,7 @@ function Refuel()
         for i=1, 16 do
             if turtle.getItemCount(i) > 0 then
                 local itemDetail = turtle.getItemDetail(i)
-                if itemDetail and itemDetail.name == "minecraft:charcoal" then
+                if itemDetail and (itemDetail.name == "minecraft:charcoal" or itemDetail.name == "minecraft:coal") then
                     turtle.select(i)
                     return turtle.refuel()
                 end
