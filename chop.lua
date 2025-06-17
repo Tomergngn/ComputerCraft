@@ -139,6 +139,7 @@ function MainLoop()
 while true do
     Refuel()
     if IsBlock("minecraft:birch_log") then -- Checking if the tree grew:
+        Modem.transmit(1, 2, "Chopping Logs")
         turtle.dig()
         turtle.forward()
         local height = 2
