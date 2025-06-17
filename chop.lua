@@ -111,8 +111,8 @@ function Select(name)
     return true
 end
 
-Refuel()
 while true do
+    Refuel()
     if IsBlock("minecraft:birch_log") then -- Checking if the tree grew:
         turtle.dig()
         turtle.forward()
