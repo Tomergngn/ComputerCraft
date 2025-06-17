@@ -138,41 +138,48 @@ end
 function MainLoop()
 while true do
     Refuel()
-    if IsBlock("minecraft:birch_log") then -- Checking if the tree grew:
-        Modem.transmit(1, 2, "Chopping Logs")
-        turtle.dig()
-        turtle.forward()
-        local height = 2
-        turtle.digUp()
-        turtle.up()
-        turtle.digUp()
-        turtle.up()
-        while not IsBlockUp("minecraft:birch_leaves") do
+    if not harvestingLeaves then
+        if IsBlock("minecraft:birch_log") then -- Checking if the tree grew:
+            turtle.dig()
+            turtle.forward()
+            local height = 2
             turtle.digUp()
             turtle.up()
-            height = height + 1
-        end
-        for _ = 1, height do
-            turtle.down()
-        end
-        turtle.back()
-    elseif IsBlock("minecraft:birch_sapling") then
-        local cnt = turtle.getItemCount(1)
-        if cnt > 1 then
-            for _=2, cnt do
-                if not Select("minecraft:bone_meal") then break end
-                turtle.place()
-                if IsBlock("minecraft:birch_log") then
-                    Modem.transmit(1, 2, "Chopping Logs")
-                    sleep(0.2)
-                    break
-                end
+            turtle.digUp()
+            turtle.up()
+            while not IsBlockUp("minecraft:birch_leaves") do
+                turtle.digUp()
+                turtle.up()
+                height = height + 1
             end
-        else 
-            GetBoneMeal()
+            Modem.transmit(1, 2, true)
+            harvestingLeaves = true
+            for _ = 1, height do
+                turtle.down()
+            end
+            turtle.back()
+        elseif IsBlock("minecraft:birch_sapling") then
+            local cnt = Count("minecraft:bone_meal")
+            if cnt > 1 then
+                for i=1, 16 do
+                    if turtle.getItemDetail(i) and turtle.getItemDetail(i).name == "minecraft:bone_meal" then
+                        if turtle.getItemCount(i) == cnt then
+                            cnt = cnt - 1 
+                        end
+                        turtle.select(i)
+                        for _=1, cnt do
+                            turtle.place()
+                            if IsBlock("minecraft:birch_log") then break end
+                        end
+                        if IsBlock("minecraft:birch_log") then break end
+                    end
+                end
+            else 
+                GetBoneMeal()
+            end
+        elseif Select("minecraft:birch_sapling") then -- Placing a sapling if there is no tree
+            turtle.place()
         end
-    elseif Select("minecraft:birch_sapling") then -- Placing a sapling if there is no tree
-        turtle.place()
     end
 
     turtle.suckUp() -- Act as another hopper

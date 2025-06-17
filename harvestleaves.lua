@@ -11,8 +11,8 @@ function BreakLeaves()
         turtle.digDown()
     end
     local shortTree = 0
-    if not turtle.detectDown() then
-        shortTree = 1
+    while not turtle.detectDown() do
+        shortTree = shortTree + 1
         turtle.down()
     end
     turtle.digDown()
