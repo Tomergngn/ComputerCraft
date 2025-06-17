@@ -131,7 +131,7 @@ while true do
             turtle.place()
         end
     end
-    if turtle.getItemCount(Find("minecraft:bone_meal")) < 20 then
+    if Find("minecraft:bone_meal") == 0 or turtle.getItemCount(Find("minecraft:bone_meal")) < 20 then
         GetBoneMeal()
     end
     sleep(1)
