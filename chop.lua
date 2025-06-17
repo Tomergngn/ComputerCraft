@@ -25,7 +25,7 @@ function Refuel()
             end
             turtle.back()
             turtle.back()
-            turtle.suckDown(64 - turtle.getItemCount(1))
+            turtle.suckDown(64 - Count("minecraft:bone_meal"))
             turtle.back()
             turtle.suckDown(64) -- Getting fuel from the chest
             if not BruteRefuel() then
@@ -54,7 +54,7 @@ function GetBoneMeal()
     end
     turtle.back()
     turtle.back()
-    turtle.suckDown(64 - turtle.getItemCount(1))
+    turtle.suckDown(64 - Count("minecraft:bone_meal"))
     turtle.back()
     turtle.suckDown(64) -- Getting fuel from the chest
     if not BruteRefuel() then
@@ -134,10 +134,10 @@ while true do
             turtle.place()
         end
     end
-    local cnt = turtle.getItemCount(1) -- Checking if we have bone meal:
-    if cnt > 1 then
-        turtle.select(1)
-        for _=2, cnt do
+    local cnt = Count("minecraft:bone_meal")
+    if cnt > 0 then
+        for _=1, cnt do
+            if not Select("minecraft:bone_meal") then break end
             turtle.place()
             if IsBlock("minecraft:birch_log") then break end
         end
