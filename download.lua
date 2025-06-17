@@ -31,6 +31,10 @@ if finish == start then
 end
 filestr = string.sub(filestr, start, finish - 2)
 filestr = string.gsub(filestr, "\",\"", "\n")
+-- Making characters such as \u003c readable by converting all "\u" to "\x" and then converting the hex code to a character:
+filestr = string.gsub(filestr, "\\u(%x%x%x%x)", function(hex)
+    return string.char(tonumber(hex, 16))
+end)
 
 local fileWrite = io.open(filename, "w")
 if fileWrite then
