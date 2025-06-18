@@ -59,12 +59,12 @@ Locator.new = function()
     end
     self.turnLeft = function()
         Locator.turnLeft()
-        self.rightRot = (self.rightRot - 1) & 3
+        self.rightRot = (self.rightRot - 1) % 4
         self.update()
     end
     self.turnRight = function()
         turtle.turnRight()
-        self.rightRot = (self.rightRot + 1) & 3
+        self.rightRot = (self.rightRot + 1) % 4
         self.update()
     end
     return self
