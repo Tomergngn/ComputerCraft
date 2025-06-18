@@ -36,7 +36,9 @@ filestr = string.gsub(filestr, "\",\"", "\n")
 filestr = string.gsub(filestr, "\\u(%x%x%x%x)", function(hex)
     return string.char(tonumber(hex, 16))
 end)
-filestr = string.gsub(filestr, "\\\"","\"") -- Replacing escaped quotes with normal quotes
+filestr = string.gsub(filestr, "\\\\","\\") -- Replacing double backslashes with a single backslash
+filestr = string.gsub(filestr, "\\n", "\n") -- Replacing escaped newlines with normal newlines
+filestr = string.gsub(filestr, "\\t", "\t") -- Replacing escaped tabs with normal tabs
 
 local fileWrite = io.open(filename, "w")
 if fileWrite then
