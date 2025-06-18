@@ -18,13 +18,13 @@ else
 	error("Failed to open Save State")
 end
 local saveData = Split(filestr, "\n")
-for _=1, saveData[1] do
+for _=1, saveData[1] do -- Right rotation
     turtle.turnLeft()
 end
-for _=1, saveData[2] do
+for _=1, saveData[2] do -- Back movement
     turtle.forward()
 end
-if saveData[3] < 0 then
+if saveData[3] < 0 then -- Up/Down Movement
     for _=1, -saveData[3] do
         turtle.up()
     end

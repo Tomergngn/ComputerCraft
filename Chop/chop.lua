@@ -1,3 +1,58 @@
+Locator = {}
+Locator.new = function()
+    local self = {}
+
+    self.upMov = 0
+    self.rightRot = 0
+    self.backMov = 0
+
+    self.update = function() SaveState:write(self.rightRot .. "\n" .. self.backMov .. "\n" .. self.upMov .. "\n") end
+
+    self.forward = function()
+        if turtle.forward() then
+            self.backMov = self.backMov - 1
+            self.update()
+            return true
+        end
+        return false
+    end
+    self.back = function()
+        if turtle.back() then
+            self.backMov = self.backMov + 1
+            self.update()
+            return true
+        end
+        return false
+    end
+    self.up = function()
+        if turtle.up() then
+            self.upMov = self.upMov + 1
+            self.update()
+            return true
+        end
+        return false
+    end
+    self.down = function()
+        if turtle.down() then
+            self.upMov = self.upMov - 1
+            self.update()
+            return true
+        end
+        return false
+    end
+    self.turnLeft = function()
+        Locator.turnLeft()
+        self.rightRot = self.rightRot - 1
+        self.update()
+    end
+    self.turnRight = function()
+        turtle.turnRight()
+        self.rightRot = self.rightRot + 1
+        self.update()
+    end
+    return self
+end
+
 function Refuel()
     function BruteRefuel()
         for i=1, 16 do
@@ -14,26 +69,26 @@ function Refuel()
     if turtle.getFuelLevel() < 20 then
         if not BruteRefuel() then
             local slct = turtle.getSelectedSlot()
-            if not turtle.up() then
+            if not Locator.up() then
                 turtle.digUp()
-                turtle.up()
-                turtle.turnLeft()
-                turtle.turnLeft()
+                Locator.up()
+                Locator.turnLeft()
+                Locator.turnLeft()
                 turtle.dig()
-                turtle.turnLeft()
-                turtle.turnLeft()
+                Locator.turnLeft()
+                Locator.turnLeft()
             end
-            turtle.back()
-            turtle.back()
+            Locator.back()
+            Locator.back()
             turtle.suckDown(62)
-            turtle.back()
+            Locator.back()
             turtle.suckDown(64) -- Getting fuel from the chest
             local dlyr = not BruteRefuel()
             turtle.select(slct)
-            turtle.forward()
-            turtle.forward()
-            turtle.forward()
-            turtle.down()
+            Locator.forward()
+            Locator.forward()
+            Locator.forward()
+            Locator.down()
             if dlyr then
                 error("No fuel found in the chest or inventory!")
             end
@@ -42,21 +97,21 @@ function Refuel()
 end
 
 function GetBoneMeal()
-    if not turtle.up() then
+    if not Locator.up() then
         turtle.digUp()
-        turtle.up()
-        turtle.turnLeft()
-        turtle.turnLeft()
+        Locator.up()
+        Locator.turnLeft()
+        Locator.turnLeft()
         turtle.dig()
-        turtle.turnLeft()
-        turtle.turnLeft()
+        Locator.turnLeft()
+        Locator.turnLeft()
     end
-    turtle.back()
-    turtle.back()
+    Locator.back()
+    Locator.back()
     turtle.suckDown(62)
-    turtle.forward()
-    turtle.forward()
-    turtle.down()
+    Locator.forward()
+    Locator.forward()
+    Locator.down()
 end
 
 function IsBlock(blockName)
@@ -141,23 +196,23 @@ while true do
     if not harvestingLeaves then
         if IsBlock("minecraft:birch_log") then -- Checking if the tree grew:
             turtle.dig()
-            turtle.forward()
+            Locator.forward()
             local height = 2
             turtle.digUp()
-            turtle.up()
+            Locator.up()
             turtle.digUp()
-            turtle.up()
+            Locator.up()
             while IsBlockUp("minecraft:birch_log") do
                 turtle.digUp()
-                turtle.up()
+                Locator.up()
                 height = height + 1
             end
             Modem.transmit(1, 2, true)
             harvestingLeaves = true
             for _ = 1, height do
-                turtle.down()
+                Locator.down()
             end
-            turtle.back()
+            Locator.back()
         elseif IsBlock("minecraft:birch_sapling") then
             local cnt = Count("minecraft:bone_meal")
             if cnt > 1 then
@@ -187,8 +242,8 @@ while true do
 
     -- If the turtle filled up, it will drop items to the chests
     if WoodSlots() > 0 then
-        turtle.down()
-        turtle.turnRight()
+        Locator.down()
+        Locator.turnRight()
         local cnt = Count("minecraft:birch_sapling")
         for i = 1, 16 do
             if turtle.getItemCount(i) > 0 then
@@ -208,13 +263,13 @@ while true do
                 end
             end
         end
-        turtle.turnLeft()
-        turtle.up()
+        Locator.turnLeft()
+        Locator.up()
     end
     sleep(0.2)
 end
 end
-
+SaveState = io.open("savestate", "w")
 Modem = peripheral.find("modem") or error("No modem attached", 0)
 Modem.open(2)
 harvestingLeaves = false
