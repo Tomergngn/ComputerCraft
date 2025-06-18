@@ -194,9 +194,12 @@ while true do
             if turtle.getItemCount(i) > 0 then
                 local itemDetail = turtle.getItemDetail(i)
                 if itemDetail then
-                    if itemDetail.name == "minecraft:birch_log" or itemDetail.name == "minecraft:stick" then
+                    if itemDetail.name == "minecraft:birch_log" then
                         turtle.select(i)
                         turtle.drop() -- Dropping birch logs to the chest on the right
+                    elseif itemDetail.name == "minecraft:stick" then
+                        turtle.select(i)
+                        turtle.dropDown() -- Dropping sticks to the chest on the bottom
                     elseif itemDetail.name == "minecraft:birch_sapling" and cnt > 64 then
                         cnt = cnt - itemDetail.count
                         turtle.select(i)
