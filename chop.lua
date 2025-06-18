@@ -186,10 +186,10 @@ while true do
     turtle.suck()
 
     -- If the turtle filled up, it will drop items to the chests
-    local cnt = Count("minecraft:birch_sapling")
-    if (cnt == 0 and WoodSlots() > 0) or FreeSlots() == 0 then
+    if WoodSlots() > 0 then
         turtle.down()
         turtle.turnRight()
+        local cnt = Count("minecraft:birch_sapling")
         for i = 1, 16 do
             if turtle.getItemCount(i) > 0 then
                 local itemDetail = turtle.getItemDetail(i)
