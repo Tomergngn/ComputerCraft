@@ -1,59 +1,59 @@
-local Locator = {}
+Locator = {}
 Locator.new = function()
     local self = {}
-
+    setmetatable(self, Locator)
     self.upMov = 0
     self.rightRot = 0
     self.backMov = 0
-
-    self.update = function()
-        SaveState:write(self.rightRot .. "\n" .. self.backMov .. "\n" .. self.upMov .. "\n")
-        SaveState:flush()
-        end
-
-    self.forward = function()
-        if turtle.forward() then
-            self.backMov = self.backMov - 1
-            self.update()
-            return true
-        end
-        return false
-    end
-    self.back = function()
-        if turtle.back() then
-            self.backMov = self.backMov + 1
-            self.update()
-            return true
-        end
-        return false
-    end
-    self.up = function()
-        if turtle.up() then
-            self.upMov = self.upMov + 1
-            self.update()
-            return true
-        end
-        return false
-    end
-    self.down = function()
-        if turtle.down() then
-            self.upMov = self.upMov - 1
-            self.update()
-            return true
-        end
-        return false
-    end
-    self.turnLeft = function()
-        Locator.turnLeft()
-        self.rightRot = (self.rightRot - 1) % 4
-        self.update()
-    end
-    self.turnRight = function()
-        turtle.turnRight()
-        self.rightRot = (self.rightRot + 1) % 4
-        self.update()
-    end
     return self
+end
+
+function Locator:update()
+    SaveState:write(self.rightRot .. "\n" .. self.backMov .. "\n" .. self.upMov .. "\n")
+    SaveState:flush()
+    end
+
+function Locator:forward()
+    if turtle.forward() then
+        Locator.backMov = self.backMov - 1
+        Locator:update()
+        return true
+    end
+    return false
+end
+function Locator:back()
+    if turtle.back() then
+        Locator.backMov = Locator.backMov + 1
+        Locator:update()
+        return true
+    end
+    return false
+end
+function Locator:up()
+    if turtle.up() then
+        Locator.upMov = Locator.upMov + 1
+        Locator:update()
+        return true
+    end
+    return false
+end
+function Locator:down()
+    if turtle.down() then
+        Locator.upMov = Locator.upMov - 1
+        Locator:update()
+        return true
+    end
+    return false
+end
+function Locator:turnLeft()
+    Locator:turnLeft()
+    Locator.rightRot = (Locator.rightRot - 1) % 4
+    Locator:update()
+end
+function Locator:turnRight()
+    turtle.turnRight()
+    Locator.rightRot = (Locator.rightRot + 1) % 4
+    Locator:update()
 end
 
 function Refuel()
