@@ -1,5 +1,7 @@
 Locator = {}
-Locator.new = function()
+Locator.__index = Locator
+
+function Locator:create()
     local self = {}
     setmetatable(self, Locator)
     self.upMov = 0
@@ -48,13 +50,15 @@ end
 function Locator:turnLeft()
     turtle.turnLeft()
     self.rightRot = (self.rightRot - 1) % 4
-    Locator:update()
+    self:update()
 end
 function Locator:turnRight()
     turtle.turnRight()
     self.rightRot = (self.rightRot + 1) % 4
     self:update()
 end
+
+myLocator = Locator:create()
 
 function Refuel()
     function BruteRefuel()
@@ -72,19 +76,19 @@ function Refuel()
     if turtle.getFuelLevel() < 20 then
         if not BruteRefuel() then
             local slct = turtle.getSelectedSlot()
-            if not Locator:up() then
+            if not myLocator:up() then
                 turtle.digUp()
-                Locator:up()
-                Locator:turnLeft()
-                Locator:turnLeft()
+                myLocator:up()
+                myLocator:turnLeft()
+                myLocator:turnLeft()
                 turtle.dig()
-                Locator:turnLeft()
-                Locator:turnLeft()
+                myLocator:turnLeft()
+                myLocator:turnLeft()
             end
-            Locator:back()
-            Locator:back()
+            myLocator:back()
+            myLocator:back()
             turtle.suckDown(62)
-            Locator:back()
+            myLocator:back()
             turtle.suckDown(64) -- Getting fuel from the chest
             local dlyr = not BruteRefuel()
             turtle.select(slct)
@@ -100,17 +104,17 @@ function Refuel()
 end
 
 function GetBoneMeal()
-    if not Locator:up() then
+    if not myLocator:up() then
         turtle.digUp()
-        Locator:up()
-        Locator:turnLeft()
-        Locator:turnLeft()
+        myLocator:up()
+        myLocator:turnLeft()
+        myLocator:turnLeft()
         turtle.dig()
-        Locator:turnLeft()
-        Locator:turnLeft()
+        myLocator:turnLeft()
+        myLocator:turnLeft()
     end
-    Locator:back()
-    Locator:back()
+    myLocator:back()
+    myLocator:back()
     turtle.suckDown(62)
     Locator:forward()
     Locator:forward()
@@ -202,12 +206,12 @@ while true do
             Locator:forward()
             local height = 2
             turtle.digUp()
-            Locator:up()
+            myLocator:up()
             turtle.digUp()
-            Locator:up()
+            myLocator:up()
             while IsBlockUp("minecraft:birch_log") do
                 turtle.digUp()
-                Locator:up()
+                myLocator:up()
                 height = height + 1
             end
             Modem.transmit(1, 2, true)
@@ -215,7 +219,7 @@ while true do
             for _ = 1, height do
                 Locator:down()
             end
-            Locator:back()
+            myLocator:back()
         elseif IsBlock("minecraft:birch_sapling") then
             local cnt = Count("minecraft:bone_meal")
             if cnt > 1 then
@@ -246,7 +250,7 @@ while true do
     -- If the turtle filled up, it will drop items to the chests
     if WoodSlots() > 0 then
         Locator:down()
-        Locator:turnRight()
+        myLocator:turnRight()
         local cnt = Count("minecraft:birch_sapling")
         for i = 1, 16 do
             if turtle.getItemCount(i) > 0 then
@@ -266,8 +270,8 @@ while true do
                 end
             end
         end
-        Locator:turnLeft()
-        Locator:up()
+        myLocator:turnLeft()
+        myLocator:up()
     end
     sleep(0.2)
 end
