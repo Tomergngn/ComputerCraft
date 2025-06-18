@@ -1,5 +1,17 @@
 local Locator = {}
 
+Locator = {}
+Locator.__index = Locator
+
+function Locator:create()
+    local self = {}
+    setmetatable(self, Locator)
+    self.upMov = 0
+    self.rightRot = 0
+    self.backMov = 0
+    return self
+end
+
 function Locator:update()
     SaveState:write(self.rightRot .. "\n" .. self.backMov .. "\n" .. self.upMov .. "\n")
     SaveState:flush()
@@ -16,7 +28,7 @@ function Locator:forward()
         elseif self.rightRot == 3 then
             self.leftMov = self.leftMov + 1
         end
-        Locator:update()
+        self:update()
         return true
     end
     return false
@@ -32,47 +44,50 @@ function Locator:back()
         elseif self.rightRot == 3 then
             self.leftMov = self.leftMov - 1
         end
-        Locator:update()
+        self:update()
         return true
     end
     return false
 end
 function Locator:up()
     if turtle.up() then
-        Locator.upMov = Locator.upMov + 1
-        Locator:update()
+        self.upMov = self.upMov + 1
+        self:update()
         return true
     end
     return false
 end
 function Locator:down()
     if turtle.down() then
-        Locator.upMov = Locator.upMov - 1
-        Locator:update()
+        self.upMov = self.upMov - 1
+        self:update()
         return true
     end
     return false
 end
 function Locator:turnLeft()
     turtle.turnLeft()
-    Locator.rightRot = (Locator.rightRot - 1) % 4
-    Locator:update()
+    self.rightRot = (self.rightRot - 1) % 4
+    self:update()
 end
 function Locator:turnRight()
     turtle.turnRight()
-    Locator.rightRot = (Locator.rightRot + 1) % 4
-    Locator:update()
+    self.rightRot = (self.rightRot + 1) % 4
+    self:update()
 end
+
+local myLocator = Locator:create()
+
 function BreakLeaves()
     function BreakTriplet()
         turtle.dig()
-        Locator:forward()
+        myLocator:forward()
         turtle.digUp()
         turtle.digDown()
     end
     function BreakDouble()
         turtle.dig()
-        Locator:forward()
+        myLocator:forward()
         turtle.digDown()
     end
     local shortTree = 0
@@ -84,34 +99,34 @@ function BreakLeaves()
     for _=1, 3 do turtle.down() end
     
     BreakTriplet()
-    Locator:turnLeft()
+    myLocator:turnLeft()
     BreakTriplet()
 
     for _=1, 3 do
-        Locator:turnLeft()
+        myLocator:turnLeft()
         BreakTriplet()
         BreakTriplet()
     end
 
     BreakDouble()
 
-    Locator:turnLeft()
+    myLocator:turnLeft()
     BreakDouble()
     BreakDouble()
     BreakDouble()
 
     for _=1, 3 do
-        Locator:turnLeft()
+        myLocator:turnLeft()
         BreakDouble()
         BreakDouble()
         BreakDouble()
         BreakDouble()
     end
 
-    Locator:turnLeft()
-    Locator:forward()
-    Locator:forward()
-    Locator:turnRight()
+    myLocator:turnLeft()
+    myLocator:forward()
+    myLocator:forward()
+    myLocator:turnRight()
 
     for i = 1, 16 do
         if turtle.getItemDetail(i) then
@@ -121,8 +136,8 @@ function BreakLeaves()
     end
 
     for _=1, (3+shortTree) do turtle.up() end
-    Locator:back()
-    Locator:back()
+    myLocator:back()
+    myLocator:back()
 end
 
 SaveState = io.open("savestate.txt", "w")
