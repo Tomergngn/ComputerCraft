@@ -92,9 +92,9 @@ function Refuel()
             turtle.suckDown(64) -- Getting fuel from the chest
             local dlyr = not BruteRefuel()
             turtle.select(slct)
-            Locator:forward()
-            Locator:forward()
-            Locator:forward()
+            myLocator:forward()
+            myLocator:forward()
+            myLocator:forward()
             Locator:down()
             if dlyr then
                 error("No fuel found in the chest or inventory!")
@@ -116,8 +116,8 @@ function GetBoneMeal()
     myLocator:back()
     myLocator:back()
     turtle.suckDown(62)
-    Locator:forward()
-    Locator:forward()
+    myLocator:forward()
+    myLocator:forward()
     Locator:down()
 end
 
@@ -203,7 +203,7 @@ while true do
     if not harvestingLeaves then
         if IsBlock("minecraft:birch_log") then -- Checking if the tree grew:
             turtle.dig()
-            Locator:forward()
+            myLocator:forward()
             local height = 2
             turtle.digUp()
             myLocator:up()
