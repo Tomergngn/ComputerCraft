@@ -9,7 +9,7 @@ function Split(inputstr, sep)
   return t
 end
 
-local fileRead = io.open("savestate", "r")
+local fileRead = io.open("savestate.txt", "r")
 local filestr = nil
 if fileRead then
 	filestr = fileRead:read("*a")
@@ -33,7 +33,7 @@ else
         turtle.down()
     end
 end
-local fileWrite = io.open("savestate", "w")
+local fileWrite = io.open("savestate.txt", "w")
 if fileWrite then
     fileWrite:write("0\n0\n0\n") -- Resetting the save state
     fileWrite:close()
