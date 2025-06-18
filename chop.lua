@@ -147,7 +147,7 @@ while true do
             turtle.up()
             turtle.digUp()
             turtle.up()
-            while not IsBlockUp("minecraft:birch_leaves") do
+            while IsBlockUp("minecraft:birch_log") do
                 turtle.digUp()
                 turtle.up()
                 height = height + 1
