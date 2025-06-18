@@ -132,6 +132,7 @@ function BreakLeaves()
     turtle.back()
 end
 
+SaveState = io.open("savestate.txt", "w")
 Modem = peripheral.find("modem") or error("No modem attached", 0)
 Modem.open(1)
 
