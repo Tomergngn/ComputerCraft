@@ -15,45 +15,45 @@ function Locator:update()
 
 function Locator:forward()
     if turtle.forward() then
-        Locator.backMov = self.backMov - 1
-        Locator:update()
+        self.backMov = self.backMov - 1
+        self:update()
         return true
     end
     return false
 end
 function Locator:back()
     if turtle.back() then
-        Locator.backMov = Locator.backMov + 1
-        Locator:update()
+        self.backMov = self.backMov + 1
+        self:update()
         return true
     end
     return false
 end
 function Locator:up()
     if turtle.up() then
-        Locator.upMov = Locator.upMov + 1
-        Locator:update()
+        self.upMov = self.upMov + 1
+        self:update()
         return true
     end
     return false
 end
 function Locator:down()
     if turtle.down() then
-        Locator.upMov = Locator.upMov - 1
-        Locator:update()
+        self.upMov = self.upMov - 1
+        self:update()
         return true
     end
     return false
 end
 function Locator:turnLeft()
-    Locator:turnLeft()
-    Locator.rightRot = (Locator.rightRot - 1) % 4
+    turtle.turnLeft()
+    self.rightRot = (self.rightRot - 1) % 4
     Locator:update()
 end
 function Locator:turnRight()
     turtle.turnRight()
-    Locator.rightRot = (Locator.rightRot + 1) % 4
-    Locator:update()
+    self.rightRot = (self.rightRot + 1) % 4
+    self:update()
 end
 
 function Refuel()
