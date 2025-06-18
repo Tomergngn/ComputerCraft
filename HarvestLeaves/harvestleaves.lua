@@ -9,6 +9,7 @@ function Locator:create()
     self.upMov = 0
     self.rightRot = 0
     self.backMov = 0
+    self.leftMov = 0
     return self
 end
 
