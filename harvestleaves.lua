@@ -62,5 +62,12 @@ while true do
     until channel == 1
     Modem.transmit(replyChannel, 1, true)
     BreakLeaves()
+
+    for i = 1, 16 do
+        if turtle.getItemDetail(i) then
+            turtle.select(i)
+            turtle.dropDown()
+        end
+    end
     Modem.transmit(replyChannel, 1, false)
 end
