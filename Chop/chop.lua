@@ -1,4 +1,4 @@
-Locator = {}
+local Locator = {}
 Locator.new = function()
     local self = {}
 
@@ -6,7 +6,10 @@ Locator.new = function()
     self.rightRot = 0
     self.backMov = 0
 
-    self.update = function() SaveState:write(self.rightRot .. "\n" .. self.backMov .. "\n" .. self.upMov .. "\n") end
+    self.update = function()
+        SaveState:write(self.rightRot .. "\n" .. self.backMov .. "\n" .. self.upMov .. "\n")
+        SaveState:flush()
+        end
 
     self.forward = function()
         if turtle.forward() then
@@ -42,12 +45,12 @@ Locator.new = function()
     end
     self.turnLeft = function()
         Locator.turnLeft()
-        self.rightRot = self.rightRot - 1
+        self.rightRot = (self.rightRot - 1) & 3
         self.update()
     end
     self.turnRight = function()
         turtle.turnRight()
-        self.rightRot = self.rightRot + 1
+        self.rightRot = (self.rightRot + 1) & 3
         self.update()
     end
     return self
