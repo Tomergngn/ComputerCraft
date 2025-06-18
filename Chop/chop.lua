@@ -58,7 +58,7 @@ function Locator:turnRight()
     self:update()
 end
 
-myLocator = Locator:create()
+local myLocator = Locator:create()
 
 function Refuel()
     function BruteRefuel()
@@ -95,7 +95,7 @@ function Refuel()
             myLocator:forward()
             myLocator:forward()
             myLocator:forward()
-            Locator:down()
+            myLocator:down()
             if dlyr then
                 error("No fuel found in the chest or inventory!")
             end
@@ -118,7 +118,7 @@ function GetBoneMeal()
     turtle.suckDown(62)
     myLocator:forward()
     myLocator:forward()
-    Locator:down()
+    myLocator:down()
 end
 
 function IsBlock(blockName)
@@ -217,7 +217,7 @@ while true do
             Modem.transmit(1, 2, true)
             harvestingLeaves = true
             for _ = 1, height do
-                Locator:down()
+                myLocator:down()
             end
             myLocator:back()
         elseif IsBlock("minecraft:birch_sapling") then
@@ -249,7 +249,7 @@ while true do
 
     -- If the turtle filled up, it will drop items to the chests
     if WoodSlots() > 0 then
-        Locator:down()
+        myLocator:down()
         myLocator:turnRight()
         local cnt = Count("minecraft:birch_sapling")
         for i = 1, 16 do
